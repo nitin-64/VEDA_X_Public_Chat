@@ -4,7 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
 
-from providers.factory import build_provider_from_env
+from providers.factory import build_provider_from_env, read_env_secret
 
 load_dotenv()
 
@@ -45,7 +45,7 @@ def sanitize_message(message: str) -> str:
 
 def get_private_prompt() -> str:
     for key in PRIVATE_PROMPT_ENV_KEYS:
-        prompt_text = (os.getenv(key) or "").strip()
+        prompt_text = read_env_secret(key)
         if prompt_text:
             return prompt_text
 

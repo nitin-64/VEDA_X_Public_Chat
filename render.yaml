@@ -3,7 +3,6 @@ services:
     name: veda-x-public-chat
     env: python
     pythonVersion: "3.11"
-    rootDir: veda_x_public_chat
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
     healthCheckPath: /api/health
