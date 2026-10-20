@@ -157,26 +157,29 @@ function streamAssistantResponse(text) {
   messages.appendChild(wrapper);
   messages.scrollTop = messages.scrollHeight;
 
-  const tokens = (text || "").match(/\s+|\S+/g) || [];
+  const fullText = text || "";
   let index = 0;
-  let currentText = "";
 
   const tick = () => {
-    if (index >= tokens.length) {
+    if (index >= fullText.length) {
+      bubble.innerHTML = renderMarkdown(fullText);
+      messages.scrollTop = messages.scrollHeight;
       return;
     }
 
-    index += 1;
-    currentText = tokens.slice(0, index).join("");
+    const nextIndex = Math.min(index + 3, fullText.length);
+    index = nextIndex;
+    const currentText = fullText.slice(0, index);
+
     bubble.innerHTML = renderMarkdown(currentText);
     messages.scrollTop = messages.scrollHeight;
 
-    if (index < tokens.length) {
-      setTimeout(tick, 20);
+    if (index < fullText.length) {
+      setTimeout(tick, 10);
     }
   };
 
-  tick();
+  setTimeout(tick, 10);
   return wrapper;
 }
 
@@ -215,6 +218,17 @@ async function sendChatMessage(text, options = {}) {
   }
 }
 
+let startupPromptTriggered = false;
+
+function triggerStartupPrompt() {
+  if (startupPromptTriggered || !messages || !input) return;
+  startupPromptTriggered = true;
+
+  setTimeout(() => {
+    sendChatMessage("veda_start", { silent: true });
+  }, 200);
+}
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const text = input.value.trim();
@@ -222,11 +236,11 @@ form.addEventListener("submit", async (event) => {
   await sendChatMessage(text);
 });
 
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    sendChatMessage("veda_start", { silent: true });
-  }, 200);
-});
+if (document.readyState === "complete") {
+  triggerStartupPrompt();
+} else {
+  window.addEventListener("load", triggerStartupPrompt);
+}
 
 input.addEventListener("input", function () {
   this.style.height = "auto";
