@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEDA_X Assistant</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">V</div>
+        <div class="brand-text">VEDA_X</div>
+      </div>
+
+      <div class="new-chat">
+        <button type="button">+ New chat</button>
+      </div>
+
+      <div class="history">
+        <div class="history-item active">VEDA_X Assistant</div>
+      </div>
+    </aside>
+
+    <main class="chat-panel">
+      <header class="topbar">
+        <div class="chat-title-wrap">
+          <div class="chat-title">VEDA_X Assistant</div>
+          <div class="status-pill">Public-safe mode</div>
+        </div>
+        <div class="top-actions">
+          <button class="ghost-btn" type="button">Share</button>
+          <button class="ghost-btn" type="button">Mode</button>
+        </div>
+      </header>
+
+      <div id="messages" class="messages">
+        <div class="message assistant">
+          <div class="avatar">V</div>
+          <div class="bubble">
+            Hello! I can answer public-safe questions about VEDA_X onboarding, governance, and workflow guidance.
+          </div>
+        </div>
+      </div>
+
+      <div class="composer-wrap">
+        <form id="chat-form" class="composer">
+          <textarea id="message-input" rows="1" placeholder="Ask VEDA_X"></textarea>
+          <button type="submit" id="send-btn">Send</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
